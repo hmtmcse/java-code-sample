@@ -1,0 +1,55 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath "org.asciidoctor:asciidoctor-gradle-jvm:2.3.0"
+    }
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+apply plugin: 'org.asciidoctor.convert'
+
+version "1.0.0"
+
+asciidoctorj {
+    version = '2.1.0'
+}
+
+
+def docSource = 'asciidoc'
+def docHtml = 'docs'
+asciidoctor {
+    sourceDir = file(docSource)
+    outputDir = file(docHtml)
+    resources {
+        from(sourceDir) {
+            include 'images/**'
+        }
+    }
+    attributes 'toc': 'left',
+    'source-highlighter': 'coderay'
+}
+
+asciidoctor.doLast {
+    copy {
+        from "${docHtml}/html5"
+        into "$docHtml"
+    }
+    delete {
+        delete "${docHtml}/html5"
+    }
+}
+
+asciidoctor.doFirst {
+    delete {
+        delete "$docHtml"
+    }
+}
