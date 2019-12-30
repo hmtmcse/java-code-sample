@@ -1,55 +1,89 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        jcenter()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
 
-    dependencies {
-        classpath "org.asciidoctor:asciidoctor-gradle-jvm:2.3.0"
-    }
-}
+group 'com.hmtmcse.samplecode'
+version '1.0.0'
+
 
 repositories {
-    mavenLocal()
+    mavenCentral()
     jcenter()
-}
-
-apply plugin: 'org.asciidoctor.convert'
-
-version "1.0.0"
-
-asciidoctorj {
-    version = '2.1.0'
+    maven { url "https://dl.bintray.com/hmtmcse/maven/" }
+    maven { url "http://central.maven.org/maven2/" }
 }
 
 
-def docSource = 'asciidoc'
-def docHtml = 'docs'
-asciidoctor {
-    sourceDir = file(docSource)
-    outputDir = file(docHtml)
-    resources {
-        from(sourceDir) {
-            include 'images/**'
+
+def dependencyList = []
+
+
+dependencies {
+    dependencyList.each {
+        if (findProject(":" + it)){
+            compile project(":" + it)
         }
     }
-    attributes 'toc': 'left',
-    'source-highlighter': 'coderay'
+    compile group: 'org.apache.commons', name: 'commons-compress', version: '1.19'
 }
 
-asciidoctor.doLast {
-    copy {
-        from "${docHtml}/html5"
-        into "$docHtml"
-    }
-    delete {
-        delete "${docHtml}/html5"
-    }
-}
+Boolean isPublish = false
+if (isPublish) {
+    bintray {
 
-asciidoctor.doFirst {
-    delete {
-        delete "$docHtml"
+        user = (project.hasProperty('bintrayUser') ? project.property('bintrayUser') : "hmtmcse" )
+        key =  (project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : "123" )
+        publish = true
+        override = true
+        publications = ['mavenJava']
+        pkg {
+            repo = 'maven'
+            name = 'com.hmtmcse.samplecode'
+            vcsUrl = 'https://github.com/hmtmcse/java-code-sample.git'
+            licenses = ['Apache-2.0']
+        }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId = 'java-code-sample'
+                groupId = 'com.hmtmcse'
+                from components.java
+                artifact sourcesJar
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
+                pom {
+                    name = 'Java java-code-sample Util'
+                    description = 'Thtis it the library of java-code-sample'
+                    url = 'http://www.hmtmcse.com/app-and-lib/java/java-code-sample'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'hmtmcse'
+                            name = 'H.M Touhid Mia'
+                            email = 'hmtm.cse@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:https://github.com/hmtmcse/java-code-sample.git'
+                        developerConnection = 'scm:git:https://github.com/hmtmcse/java-code-sample.git'
+                        url = 'https://github.com/hmtmcse/java-code-sample'
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        sign publishing.publications.mavenJava
     }
 }
