@@ -28,7 +28,8 @@ class IteratorTest {
             DataX dataX = iterator.next()
             println(dataX.name + " " + dataX.age)
             if (dataX.child){
-                dataX.child = process(dataX.child)
+//                dataX.child = process(dataX.child)
+                process(dataX.child)
             }
             if (dataX.name.equals("Remove")){
                 iterator.remove()
