@@ -10,7 +10,8 @@ repositories {
     maven { url "http://central.maven.org/maven2/" }
 }
 
-
+apply plugin: 'java'
+apply plugin: 'groovy'
 
 def dependencyList = []
 
@@ -22,6 +23,7 @@ dependencies {
         }
     }
     compile group: 'org.apache.commons', name: 'commons-compress', version: '1.19'
+    compile 'org.codehaus.groovy:groovy-all:2.5.6'
 }
 
 Boolean isPublish = false
