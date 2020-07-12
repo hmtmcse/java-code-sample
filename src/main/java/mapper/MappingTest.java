@@ -75,4 +75,5 @@ public class MappingTest {
                 || c == List.class || c == Date.class || c == Long.class;
     }
 
+
 }
