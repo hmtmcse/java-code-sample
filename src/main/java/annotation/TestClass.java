@@ -68,6 +68,7 @@ public class TestClass {
 
     public static void main(String[] args) {
         Person person = new Person("soufiane", "cheouati", "34");
+        person.setAddressObj(new Address());
         TestClass serializer = new TestClass();
         String jsonString = serializer.convertToJson(person);
         System.out.println(jsonString);

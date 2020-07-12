@@ -14,6 +14,9 @@ public class Person {
 
     private String address;
 
+    @JsonElement
+    private Address addressObj;
+
     @Init
     private void initNames() {
         this.firstName = this.firstName.substring(0, 1).toUpperCase()
@@ -28,5 +31,9 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+    }
+
+    public void setAddressObj(Address addressObj) {
+        this.addressObj = addressObj;
     }
 }
