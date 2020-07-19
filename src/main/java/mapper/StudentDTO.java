@@ -1,5 +1,7 @@
 package mapper;
 
+import mapper.data.Student;
+
 import java.util.ArrayList;
 import java.util.List;
 

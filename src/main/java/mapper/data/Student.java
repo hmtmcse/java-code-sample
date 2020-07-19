@@ -1,12 +1,12 @@
-package mapper;
+package mapper.data;
 
-import sun.util.calendar.BaseCalendar;
+import mapper.entity.Gender;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 public class Student {
+
 
     public String name;
     public Integer age;
@@ -14,8 +14,8 @@ public class Student {
     public Date dob;
     public Gender gender;
     public String password;
-    public Student friend;
-    public List<Student> others = new ArrayList<>();
+//    public Student friend;
+//    public List<Student> others = new ArrayList<>();
 
     public String getName() {
         return name;
