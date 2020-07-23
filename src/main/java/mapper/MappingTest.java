@@ -1,12 +1,10 @@
 package mapper;
 
-import mapper.data.OneMan;
-import mapper.data.Student;
+import mapper.exp.GenericCopy;
+import org.modelmapper.ModelMapper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -47,14 +45,13 @@ public class MappingTest {
 //        System.out.println(myDto.getEmail());
 //        System.out.println(myDto.getName());
 
-//        fieldList(StudentDTO.class);
-        fieldList(mapper.entity.Student.class);
+        fieldList(StudentDTO.class);
 
     }
 
 
     public static void fieldList(Class<?> destinationType){
-        Field[] allFields = destinationType.getFields();
+        Field[] allFields = destinationType.getDeclaredFields();
         for (Field field : allFields) {
             if (Modifier.isPrivate(field.getModifiers())) {
                 System.out.println(field.getName());
@@ -75,7 +72,7 @@ public class MappingTest {
         return c.isPrimitive() || c == String.class || c == Boolean.class
                 || c == Byte.class || c == Short.class || c == Character.class
                 || c == Integer.class || c == Float.class || c == Double.class
-                || c == LocalDateTime.class || c == LocalDate.class|| c == List.class || c == Date.class || c == Long.class;
+                || c == List.class || c == Date.class || c == Long.class;
     }
 
 
