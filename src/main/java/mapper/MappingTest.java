@@ -1,5 +1,6 @@
 package mapper;
 
+import mapper.data.Student;
 import mapper.exp.GenericCopy;
 import org.modelmapper.ModelMapper;
 
@@ -17,6 +18,9 @@ public class MappingTest {
         student.setAge(20);
         student.setEmail("email@email.local");
         student.setName("Student Name");
+
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.map(student, Student.class);
 
 //        Student otherStudent = new Student();
 //        otherStudent.setAge(10);
