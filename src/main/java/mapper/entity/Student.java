@@ -13,4 +13,8 @@ public class Student extends BaseEntity {
     public Boolean getActive() {
         return isActive;
     }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }
