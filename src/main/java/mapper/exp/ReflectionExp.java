@@ -6,6 +6,7 @@ import mapper.entity.Student;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 
 public class ReflectionExp {
 
@@ -96,7 +97,12 @@ public class ReflectionExp {
         Field newInstanceField;
         for (Field field : object.getClass().getFields()) {
             newInstanceField = newInstance.getClass().getField(field.getName());
+            if (Modifier.isPrivate(field.getModifiers())){
+                System.out.println(field.getName());
+            }
+            System.out.println(field.getName());
             newInstanceField.setAccessible(true);
+            field.setAccessible(true);
             newInstanceField.set(newInstance, field.get(object));
         }
         return newInstance;
@@ -116,7 +122,9 @@ public class ReflectionExp {
             old.setActive(false);
 
 
+            System.out.println("\n");
             Student student = copy(old, Student.class);
+            System.out.println("\n");
             System.out.println(student.firstName);
             System.out.println(student.lastName);
             System.out.println(student.identity);
