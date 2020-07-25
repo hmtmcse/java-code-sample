@@ -8,5 +8,9 @@ public class Student extends BaseEntity {
     public String mobile;
     public Address address;
     public Gender gender;
-    public Boolean isActive;
+    private Boolean isActive;
+
+    public Boolean getActive() {
+        return isActive;
+    }
 }
