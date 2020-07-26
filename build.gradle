@@ -13,7 +13,9 @@ repositories {
 apply plugin: 'java'
 apply plugin: 'groovy'
 
-def dependencyList = []
+def dependencyList = [
+        "java-object-copier"
+]
 
 
 dependencies {

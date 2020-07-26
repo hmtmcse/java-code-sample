@@ -1,13 +1,11 @@
 package mapper.exp;
 
+import com.hmtmcse.oc.reflection.ReflectionProcessor;
 import mapper.entity.Address;
 import mapper.entity.Gender;
 import mapper.entity.Student;
-import reflection.ReflectionProcessor;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
 
 public class ReflectionExp {
 
@@ -93,10 +91,11 @@ public class ReflectionExp {
     }
 
 
-    public static <D> D copy(Object object, Class<D> c) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
-        D newInstance = c.getDeclaredConstructor().newInstance();
-        Field newInstanceField;
+    public static <D> D copy(Object object, Class<D> c) throws IllegalAccessException{
         ReflectionProcessor reflectionProcessor = new ReflectionProcessor();
+        D newInstance = reflectionProcessor.newInstance(c);
+        Field newInstanceField;
+
         for (Field field : reflectionProcessor.getAllField(object.getClass())) {
             field.setAccessible(true);
             newInstanceField = reflectionProcessor.getFieldFromObject(newInstance, field.getName());
@@ -117,9 +116,9 @@ public class ReflectionExp {
             old.firstName = "Touhid";
             old.lastName = "Mia";
             old.identity = "123123123";
-            old.mobile = "0101010101010";
+            old.mobile = "017777777777";
             old.gender = Gender.MALE;
-            old.setActive(false);
+            old.setActive(true);
 
 
             System.out.println("\n");
@@ -132,7 +131,7 @@ public class ReflectionExp {
             System.out.println(student.gender);
             System.out.println(student.getActive());
 
-        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
+        } catch ( IllegalAccessException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
