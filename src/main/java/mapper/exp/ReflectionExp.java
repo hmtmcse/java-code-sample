@@ -3,6 +3,7 @@ package mapper.exp;
 import mapper.entity.Address;
 import mapper.entity.Gender;
 import mapper.entity.Student;
+import reflection.ReflectionProcessor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -95,15 +96,14 @@ public class ReflectionExp {
     public static <D> D copy(Object object, Class<D> c) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
         D newInstance = c.getDeclaredConstructor().newInstance();
         Field newInstanceField;
-        for (Field field : object.getClass().getFields()) {
-            newInstanceField = newInstance.getClass().getField(field.getName());
-            if (Modifier.isPrivate(field.getModifiers())){
-                System.out.println(field.getName());
+        ReflectionProcessor reflectionProcessor = new ReflectionProcessor();
+        for (Field field : reflectionProcessor.getAllField(object.getClass())) {
+            field.setAccessible(true);
+            newInstanceField = reflectionProcessor.getFieldFromObject(newInstance, field.getName());
+            if (newInstanceField != null) {
+                newInstanceField.set(newInstance, field.get(object));
             }
             System.out.println(field.getName());
-            newInstanceField.setAccessible(true);
-            field.setAccessible(true);
-            newInstanceField.set(newInstance, field.get(object));
         }
         return newInstance;
     }
@@ -133,6 +133,7 @@ public class ReflectionExp {
             System.out.println(student.getActive());
 
         } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
