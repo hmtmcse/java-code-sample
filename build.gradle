@@ -24,6 +24,7 @@ dependencies {
             compile project(":" + it)
         }
     }
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '3.4.4'
     compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
     compile group: 'org.apache.commons', name: 'commons-compress', version: '1.19'
     compile 'org.codehaus.groovy:groovy-all:2.5.6'
