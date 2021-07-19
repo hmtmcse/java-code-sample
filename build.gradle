@@ -29,6 +29,9 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-compress', version: '1.19'
     compile 'org.codehaus.groovy:groovy-all:2.5.6'
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.0'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.0'
+    implementation group: 'javax.mail', name: 'mail', version: '1.4.7'
 }
 
 Boolean isPublish = false
